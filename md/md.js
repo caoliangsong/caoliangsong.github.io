@@ -6,6 +6,9 @@
 
 (function(expose) {
 
+
+
+
   var MarkdownHelpers = {};
 
   // For Spidermonkey based engines
