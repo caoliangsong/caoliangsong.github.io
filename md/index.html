@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>mdwriter online</title>
+	<script src="http://cdn.bootcss.com/vue/2.2.1/vue.min.js"></script>
+	<script src="md.js"></script>
+	<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	html,body,#editor{
+		height: 100%;
+	}
+	textarea{
+		height: 100%;
+		background: #f55;
+		float:left;
+		width: 49%;
+		border: none;
+		  border-right: 1px solid #ccc;
+		  resize: none;
+		  outline: none;
+	}
+	.main{
+		height: 100%;
+		background: #55f;
+		float:left;
+		width: 49%;
+	}
+</style>
+</head>
+<body>
+	<div id="editor">
+	  <textarea :value="input" @input="update"></textarea>
+	  <div v-html="compiledMarkdown" class="main"></div>
+	</div>
+	<script>
+		(function() {
+			// body...
+			new Vue({
+			  el: '#editor',
+			  data: {
+			    input: '',
+			    timer: null
+			  },
+			  computed: {
+			    compiledMarkdown: function () {
+			      return Markdown.toHTML(this.input)
+			    }
+			  },
+			  methods: {
+			    update: function (e) {
+			    	var self = this;
+			    	clearTimeout(this.timer);
+			    	this.timer =  setTimeout(function(){
+			    		self.input = e.target.value;
+			    	},300);
+			    }
+			  }
+			}) 
+		})()
+	</script>
+</body>
+</html>
